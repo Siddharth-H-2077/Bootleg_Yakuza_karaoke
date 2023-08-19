@@ -10,9 +10,10 @@ using UnityEditor.PackageManager;
 
 public class SongManager : MonoBehaviour
 {
-    public SongManager instance;
+    public static SongManager songManagerInstance;
     public AudioSource audioSource;
     public float songDelayInSeconds;
+    public double marginOfError;
     public float inputDelayInMilliseconds;
     public string fileLocation;
     public float noteTime;
@@ -24,7 +25,7 @@ public class SongManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        instance = this;
+        songManagerInstance = this;
         //Check if file path is url
         if (Application.streamingAssetsPath.StartsWith("http://") || Application.streamingAssetsPath.StartsWith("https://"))
         {
@@ -75,7 +76,7 @@ public class SongManager : MonoBehaviour
         var notes = midiFile.GetNotes(); 
 
         //creating an array to store notes instead of iCollection
-        var array = new Note[notes.Count];
+        var array = new Melanchall.DryWetMidi.Interaction.Note[notes.Count];
 
         notes.CopyTo(array, 0);
         Invoke(nameof(StartSong), songDelayInSeconds);
@@ -83,7 +84,12 @@ public class SongManager : MonoBehaviour
 
     public void StartSong()
     {
-        throw new NotImplementedException();
+        audioSource.Play();
+    }
+    
+    public static double GetaudioSourceTime()
+    {
+        return (double)songManagerInstance.audioSource.timeSamples / songManagerInstance.audioSource.clip.frequency;
     }
 
     // Update is called once per frame
