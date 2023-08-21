@@ -1,4 +1,5 @@
 using Melanchall.DryWetMidi.Interaction;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -49,6 +50,41 @@ public class Lane : MonoBehaviour
         {
             double timeStamp = timeStamps[inputIndex];
             double marginOfError = SongManager.songManagerInstance.marginOfError;
+            double audioTime = SongManager.GetaudioSourceTime() - (SongManager.songManagerInstance.inputDelayInMilliseconds / 1000.0);
+
+            if (Input.GetKeyDown(input))
+            {
+                if (Math.Abs(audioTime - timeStamp) < marginOfError)
+                {
+                    Hit();
+                    print($"Hit on {inputIndex} note");
+                    Destroy(notes[inputIndex].gameObject);
+                    inputIndex++;
+                }
+                else
+                {
+                    print($"Hit inaccurate on {inputIndex} note");
+                }
+            }
+
+            if (timeStamp + marginOfError <= audioTime)
+            {
+                Miss();
+                print($"Missed {inputIndex} note");
+                inputIndex++;
+            }
+
+
         }
+    }
+
+    private void Miss()
+    {
+        ScoreManager.Miss();
+    }
+
+    private void Hit()
+    {
+        ScoreManager.Hit();
     }
 }

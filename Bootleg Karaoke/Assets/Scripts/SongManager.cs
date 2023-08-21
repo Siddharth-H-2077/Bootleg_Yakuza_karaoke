@@ -12,9 +12,12 @@ public class SongManager : MonoBehaviour
 {
     public static SongManager songManagerInstance;
     public AudioSource audioSource;
+    public Lane[] lanes;
     public float songDelayInSeconds;
     public double marginOfError;
+
     public float inputDelayInMilliseconds;
+
     public string fileLocation;
     public float noteTime;
     public float noteSpawnX;
@@ -79,6 +82,11 @@ public class SongManager : MonoBehaviour
         var array = new Melanchall.DryWetMidi.Interaction.Note[notes.Count];
 
         notes.CopyTo(array, 0);
+
+        foreach (var lane in lanes)
+        {
+            lane.SetTimeStamps(array);
+        }
         Invoke(nameof(StartSong), songDelayInSeconds);
     }
 
