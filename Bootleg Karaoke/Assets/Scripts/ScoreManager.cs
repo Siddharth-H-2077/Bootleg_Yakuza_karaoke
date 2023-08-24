@@ -19,12 +19,12 @@ public class ScoreManager : MonoBehaviour
     public static void Hit()
     {
         comboScore += 1;
-        scoreManagerInstance.hitSFX.Play();
+        //scoreManagerInstance.hitSFX.Play();
     }
     public static void Miss()
     {
         comboScore = 0;
-        scoreManagerInstance.missSFX.Play();
+        //scoreManagerInstance.missSFX.Play();
     }
     // Update is called once per frame
     void Update()
