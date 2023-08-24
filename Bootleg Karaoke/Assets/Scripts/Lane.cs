@@ -14,12 +14,13 @@ public class Lane : MonoBehaviour
 
     int spawnIndex = 0;
     int inputIndex = 0;
+
+    public Transform spawnPos;
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
 
+    }
     public void SetTimeStamps(Melanchall.DryWetMidi.Interaction.Note[] array)
     {
         foreach (var note in array)
@@ -28,18 +29,18 @@ public class Lane : MonoBehaviour
             {
                 var metricTimeSpan = TimeConverter.ConvertTo<MetricTimeSpan>(note.Time, SongManager.midiFile.GetTempoMap());
                 timeStamps.Add((double)metricTimeSpan.Minutes * 60f + metricTimeSpan.Seconds + (double)metricTimeSpan.Milliseconds / 1000f);
-
             }
         }
     }
     // Update is called once per frame
     void Update()
     {
+        
         if (spawnIndex < timeStamps.Count)
         {
-            if (SongManager.GetaudioSourceTime() >= timeStamps[spawnIndex] - SongManager.songManagerInstance.noteTime)
+            if (SongManager.GetAudioSourceTime() >= timeStamps[spawnIndex] - SongManager.songManagerInstance.noteTime)
             {
-                var note = Instantiate(notePrefab, transform);
+                var note = Instantiate(notePrefab, transform.position, Quaternion.Euler(90, 180, 0));
                 notes.Add(note.GetComponent<Note>());
                 note.GetComponent<Note>().assignedTime = (float)timeStamps[spawnIndex];
                 spawnIndex++;
@@ -50,41 +51,37 @@ public class Lane : MonoBehaviour
         {
             double timeStamp = timeStamps[inputIndex];
             double marginOfError = SongManager.songManagerInstance.marginOfError;
-            double audioTime = SongManager.GetaudioSourceTime() - (SongManager.songManagerInstance.inputDelayInMilliseconds / 1000.0);
+            double audioTime = SongManager.GetAudioSourceTime() - (SongManager.songManagerInstance.inputDelayInMilliseconds / 1000.0);
 
             if (Input.GetKeyDown(input))
             {
                 if (Math.Abs(audioTime - timeStamp) < marginOfError)
                 {
-                    Hit();
+                    //Hit();
                     print($"Hit on {inputIndex} note");
                     Destroy(notes[inputIndex].gameObject);
                     inputIndex++;
                 }
                 else
                 {
-                    print($"Hit inaccurate on {inputIndex} note");
+                    print($"Hit inaccurate on {inputIndex} note with {Math.Abs(audioTime - timeStamp)} delay");
                 }
             }
-
             if (timeStamp + marginOfError <= audioTime)
             {
-                Miss();
+                //Miss();
                 print($"Missed {inputIndex} note");
                 inputIndex++;
             }
-
-
         }
-    }
 
-    private void Miss()
-    {
-        ScoreManager.Miss();
     }
-
     private void Hit()
     {
         ScoreManager.Hit();
+    }
+    private void Miss()
+    {
+        ScoreManager.Miss();
     }
 }

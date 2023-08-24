@@ -95,7 +95,7 @@ public class SongManager : MonoBehaviour
         audioSource.Play();
     }
     
-    public static double GetaudioSourceTime()
+    public static double GetAudioSourceTime()
     {
         return (double)songManagerInstance.audioSource.timeSamples / songManagerInstance.audioSource.clip.frequency;
     }

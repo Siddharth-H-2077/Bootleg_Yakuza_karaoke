@@ -6,17 +6,22 @@ public class Note : MonoBehaviour
 {
     double timeInstantiated;
     public float assignedTime;
+    public Transform laneTransform;
+    Vector3 spawnLocation, despawnLocation;
+    
 
     // Start is called before the first frame update
     void Start()
     {
-        timeInstantiated = SongManager.GetaudioSourceTime();        
+        timeInstantiated = SongManager.GetAudioSourceTime();
+        spawnLocation = new Vector3(SongManager.songManagerInstance.noteSpawnX, transform.position.y, transform.position.z);
+        despawnLocation = new Vector3(SongManager.songManagerInstance.noteDespawnX, transform.position.y, transform.position.z);
     }
 
     // Update is called once per frame
     void Update()
     {
-        double timeSinceInstatiated = SongManager.GetaudioSourceTime() - timeInstantiated;
+        double timeSinceInstatiated = SongManager.GetAudioSourceTime() - timeInstantiated;
         float t = (float)(timeSinceInstatiated / (SongManager.songManagerInstance.noteTime * 2));
 
         if (t > 1)
@@ -25,7 +30,9 @@ public class Note : MonoBehaviour
         }
         else
         {
-            transform.position = Vector3.Lerp(Vector3.right * SongManager.songManagerInstance.noteSpawnX, Vector3.right * SongManager.songManagerInstance.noteDespawnX, t);
+            transform.position = Vector3.Lerp(spawnLocation, despawnLocation, t);//Vector3.Lerp(Vector3.right * SongManager.songManagerInstance.noteSpawnX, Vector3.right * SongManager.songManagerInstance.noteDespawnX, t);
+            //transform.position = Vector3.Lerp(spawnLocation, despawnLocation, t);
+            
         }
     }
 }

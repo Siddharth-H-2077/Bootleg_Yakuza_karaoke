@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5518084434644119789}
   - component: {fileID: 5518084434644119788}
   - component: {fileID: 5518084434644119791}
-  - component: {fileID: -6760152900622460167}
+  - component: {fileID: 7461637771366632126}
   m_Layer: 0
   m_Name: DOWN_Note
   m_TagString: Untagged
@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5518084434644119790}
   m_LocalRotation: {x: 0, y: 0.7071068, z: -0.7071068, w: 0}
-  m_LocalPosition: {x: -3.38, y: -2.42, z: -0.86}
+  m_LocalPosition: {x: -3.38, y: -3.43, z: -0.86}
   m_LocalScale: {x: 0.125, y: 0.125, z: 0.125}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -99,7 +99,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &-6760152900622460167
+--- !u!114 &7461637771366632126
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -108,7 +108,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5518084434644119790}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 639a455c109719943a6a567e42b62b5f, type: 3}
+  m_Script: {fileID: 11500000, guid: e37fb9f1f76050e44b09eade093cc766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tempo: 1
+  assignedTime: 0
