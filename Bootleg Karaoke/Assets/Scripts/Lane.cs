@@ -19,7 +19,12 @@ public class Lane : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        for (;spawnIndex < timeStamps.Count;spawnIndex++)
+        {
+            var note = Instantiate(notePrefab, transform.position, Quaternion.Euler(90, 180, 0));
+            notes.Add(note.GetComponent<Note>());
+            note.GetComponent<Note>().assignedTime = (float)timeStamps[spawnIndex];
+        }
     }
     public void SetTimeStamps(Melanchall.DryWetMidi.Interaction.Note[] array)
     {
